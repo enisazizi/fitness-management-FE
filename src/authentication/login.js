@@ -13,7 +13,7 @@ const Login = ({ history }) => {
   };
   useEffect(() => {
     if (!client.auth) return;
-    history.push("/home");
+    history.push("/products");
   }, [client]);
   const handleForm = async (e) => {
     e.preventDefault();

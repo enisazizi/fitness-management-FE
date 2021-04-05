@@ -10,6 +10,7 @@ const addClient = async (data) => {
   try {
     let response = await axios(configure("/client", data, "post"));
     response = response.data;
+    console.log(response)
     return response;
   } catch (error) {
     console.log(error);
@@ -17,7 +18,7 @@ const addClient = async (data) => {
 };
 const login = async (data) => {
   try {
-    const response = await axios(configure("/auth/login", data, "post"));
+    const response = await axios(configure("/api/auth/login", data, "post"));
     return response.data;
   } catch (error) {
     console.log(error);
@@ -49,7 +50,7 @@ const addNewProduct = async(data)=>{
 }
 const getAllProducts = async()=>{
   try {
-    const response = await axios(configure("/product/all",null,"get"))
+    const response = await axios(configure("/api/product/all",null,"get"))
     return response.data
   } catch (error) {
     

@@ -1,17 +1,18 @@
 import React, { useState,useEffect } from "react"
 import { Card, Row,Col ,Button,Nav, Container} from 'react-bootstrap';
-import {api} from "../../data/api"
+// import {data} from "../../data"
 import AddProduct from "./AddProduct";
 import SingleProduct from "./SingleProduct";
 
 function Products(props){
 
   const [selected, setSelected] = useState("products");
-    // useEffect(async ()=>{
-    //     const res = await api.getAllProducts()
-    //     setProducts(res)
-    //     console.log(res)
-    // },[])
+  // const [productsData,setProductsData] = useState()
+  // useEffect( async () => {
+  //   const response = await data.api.getAllProducts();
+  //   setProductsData(response)
+  //   console.log("Hello")
+  // }, [])
 
     return(
         <>
