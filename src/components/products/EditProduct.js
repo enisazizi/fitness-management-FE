@@ -1,30 +1,119 @@
-import React, { useState } from "react"
-import {Modal,Button} from "react-bootstrap"
-
-function EditProduct(){
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
- 
+import React, { useEffect, useState } from "react"
+import {Form,Button, Container} from "react-bootstrap"
+import SidebarHOC from "../../Layout"
+import {data} from "../../data"
+function EditProduct(props){
+      const [info,setInfo] = useState()
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [brand, setBrand] = useState("");
+    const [price, setPrice] = useState(null);
+    const [file, setFile] = useState();
     
+    
+    const handleFile = (e) => {
+      const formData = new FormData();
+      formData.append("product", e.target.files[0]);
+      console.log(formData)
+      setFile(formData);
+      
+  };
+  
+  const handleUpload = async (e) => {
+    try {
+      if(file){
+        const response = await data.api.editProduct(file,props.match.params.productId)
+        console.log("res of img",response)
+        
+      
+        console.log(file, "responnssssss");
+        if (response.status === 201) {
+          const res = await data.api.editProduct({name,description,brand,price},props.match.params.productId)
+        }
+      }else{
+        console.log("U need a pic")
+      }
+    } catch (error) {
+      console.log("handle upl img err: ", error);
+    }
+  }
+  useEffect(async()=>{
+    const res = await data.api.getProduct(props.match.params.productId)
+    setInfo(res)
+    console.log("info",res)
+  },[])
     return(
         <>
-   
-        <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        {info &&
+        
+    <Container>
+
+  
+         <Form>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="name"
+              onChange={(e) => setName(e.target.value)}
+              placeholder={info.name}
+              className="name"
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="description"
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={info.description}
+              />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Brand</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="brand"
+              placeholder={info.brand}
+              onChange={(e) => setBrand(e.target.value)}
+              />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder={`${info.price} euro`}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Form.Group>
+          <label
+								id='select-to-upload-btn'
+								className='d-flex justify-content-center py-1 my-1 mt-2 '>
+								<i class='fas fa-image my-post-i d-flex justify-content-center align-items-center'></i>
+								<input
+									className='file-upload'
+									type='file'
+									multiple
+									onChange={(e) => handleFile(e)}
+                  />
+							</label>
+                      
+          <Form.Group controlId="exampleForm.ControlSelect1">
+          <Button
+						variant='primary'
+						onClick={(e) => handleUpload(e)}
+						style={{ backgroundColor: "#e647be", border: "none" }}>
+						Save Changes
+					</Button>
+          </Form.Group>
+        </Form>
+       
+        
+     
+              </Container>
+        }
       </>
     )
 }
 
-export default EditProduct
+export default SidebarHOC(EditProduct)

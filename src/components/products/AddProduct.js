@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { api } from "../../data/api";
+import { data } from "../../data";
 
 function AddProduct() {
   const [name, setName] = useState("");
@@ -8,28 +8,39 @@ function AddProduct() {
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(null);
   const [file, setFile] = useState();
-	const [input, setInput] = useState();
+
   const handleFile = (e) => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    formData.append("product", e.target.files[0]);
 
     setFile(formData);
-    setInput(URL.createObjectURL(e.target.files[0]));
+   
+  
 };
-  const addProductFun = async () => {
-    let data = { name, description, brand, price };
-    const res = await api.addNewProduct(data);
+  // const addProductFun = async () => {
+  //   let data = { name, description, brand, price };
+  //   const res = await api.addNewProduct(data);
 
-    console.log("what is res ?", res);
-  };
+  //   console.log("what is res ?", res);
+  // };
   const handleUpload = async (e) => {
     try {
-       
+      if(file){
+  
+        const response = await data.api.addNewProduct({name,description,brand,price})
       
+        console.log(file, "responnssssss");
+        if (response.status === 201) {
+          const res = await data.api.addProductPhoto(file,response.data)
+          console.log("res of img",res)
+        }
+      }else{
+        console.log("U need a pic")
+      }
     } catch (error) {
-        console.log("handle upl img err: ", error);
+      console.log("handle upl img err: ", error);
     }
-};
+  }
   return (
     <Row>
       <Col xs={2}></Col>
@@ -54,15 +65,15 @@ function AddProduct() {
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Brand</Form.Label>
             <Form.Control
               type="text"
-              placeholder="username"
+              placeholder="brand"
               onChange={(e) => setBrand(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Price</Form.Label>
             <Form.Control
               type="number"
               placeholder="price"

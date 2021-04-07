@@ -7,21 +7,19 @@ import {
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Landing from "./pages/landing";
-import SideBar from "./components/sidebar/Sidebar"
-import Products from "./components/products/Products"
+import Products from "./components/products/Products";
 import { data } from "./data";
 import { useRecoilState, RecoilRoot } from "recoil";
 import Activity from "./components/activity/Activity";
+import EditProduct from "./components/products/EditProduct";
 function App() {
   return (
     <RecoilRoot>
-      
       <Router>
-        
         <Switch>
-        <Route exact path="/Activity" component={Activity} />
-          <Route exact path="/" component={SideBar} />
+          <Route exact path="/activity" component={Activity} />
           <Route exact path="/products" component={Products} />
+          <Route path='/:productId' exact component={EditProduct} />
           <Route exact path="/login" component={Landing} />
         </Switch>
       </Router>
@@ -47,12 +45,13 @@ function Protected({ component: Component, ...rest }) {
       render={(props) => {
         if (!client.auth) {
           return (
-            <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
           );
         } else return <Component {...props} />;
       }}
     />
- 
   );
 }
 

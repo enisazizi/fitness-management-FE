@@ -42,10 +42,18 @@ const deleteClient = async () => {
 };
 const addNewProduct = async(data)=>{
   try {
-    const response = await axios(configure("/product",data,"post"))
+    const response = await axios(configure("/api/product",data,"post"))
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+const addProductPhoto = async(data,id)=>{
+  try {
+    const response = await axios(configure(`/api/product/${id}/image/upload`,data,"post"))
     return response.data
   } catch (error) {
-    
+    console.log(error)
   }
 }
 const getAllProducts = async()=>{
@@ -54,6 +62,31 @@ const getAllProducts = async()=>{
     return response.data
   } catch (error) {
     
+  }
+}
+const getProduct = async(id)=>{
+  try {
+    const response = await axios(configure(`/api/product/${id}`,null,"get"))
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+const editProduct = async(data,id)=>{
+  try {
+    const response = await axios(configure(`/api/product/${id}`,data,"put"))
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteProduct = async(id)=>{
+  try {
+    const response = await axios(configure(`/api/product/${id}`,null,"delete"))
+    return response
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -69,5 +102,9 @@ export const api = {
   deleteClient,
   addNewProduct,
   getAllProducts,
+  addProductPhoto,
+  getProduct,
+  editProduct,
+  deleteProduct,
 
 };
