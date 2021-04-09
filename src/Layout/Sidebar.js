@@ -1,8 +1,14 @@
 import React from "react";
 import { Nav, Button, ListGroup } from "react-bootstrap";
+import { useHistory } from "react-router";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
+  const history = useHistory()
+  function handleClick(param) {
+    console.log("hehe")
+    history.push(`/${param}`)
+  }
   return (
     <div style={{ height: "100vh" }} className="container-fluid sticky-top">
       <div className="row row-cols-1 h-100">
@@ -13,16 +19,16 @@ export default () => {
             alt=""
           />
           <ListGroup className="mt-5 text-center px-3">
-            <ListGroup.Item className=" h4 rounded " style={{ height: "50px" }}>
+            <ListGroup.Item className=" h4 rounded " onClick={()=>handleClick("activity")} style={{ height: "50px" }}>
               Activity
             </ListGroup.Item>
-            <ListGroup.Item className=" h4 rounded " style={{ height: "50px" }}>
+            <ListGroup.Item className=" h4 rounded "  onClick={()=>handleClick("clients")} style={{ height: "50px" }}>
               Clients
             </ListGroup.Item>
-            <ListGroup.Item className=" h4 rounded " style={{ height: "50px" }}>
+            <ListGroup.Item className=" h4 rounded "  onClick={()=>handleClick("products")} style={{ height: "50px" }}>
               Products
             </ListGroup.Item>
-            <ListGroup.Item className=" h4 rounded " style={{ height: "50px" }}>
+            <ListGroup.Item className=" h4 rounded "  onClick={()=>handleClick("payments")} style={{ height: "50px" }}>
               Payments
             </ListGroup.Item>
           </ListGroup>

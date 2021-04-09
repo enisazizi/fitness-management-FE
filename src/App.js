@@ -12,15 +12,19 @@ import { data } from "./data";
 import { useRecoilState, RecoilRoot } from "recoil";
 import Activity from "./components/activity/Activity";
 import EditProduct from "./components/products/EditProduct";
+import Clients from "./components/clients/Clients";
+import Payments from "./components/payments/Payments";
 function App() {
   return (
     <RecoilRoot>
       <Router>
         <Switch>
+          <Route exact path="/clients" component={Clients}/>
+          <Route exact path="/payments" component={Payments}/>
           <Route exact path="/activity" component={Activity} />
           <Route exact path="/products" component={Products} />
           <Route path='/:productId' exact component={EditProduct} />
-          <Route exact path="/login" component={Landing} />
+          <Route exact path="/" component={Landing} />
         </Switch>
       </Router>
     </RecoilRoot>

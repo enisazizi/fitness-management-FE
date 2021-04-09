@@ -24,12 +24,8 @@ const Landing = (props) => {
               }}
               defaultActiveKey="/"
             >
-              <Nav.Item>
-                <Nav.Link eventKey="login">Login</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="register">Register</Nav.Link>
-              </Nav.Item>
+            
+           
             </Nav>
           </div>
         </div>

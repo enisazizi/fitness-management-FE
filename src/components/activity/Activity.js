@@ -65,9 +65,9 @@ function Activity() {
               <tbody>
                 <tr>
                   <td style={{ width: "20px" }}>1</td>
-                  <td>Detart</td>
-                  <td>Grajqevci</td>
-                  <td>Koperi</td>
+                  <td>Manuel</td>
+                  <td>Desole</td>
+                  <td>Manu</td>
                 </tr>
                 <tr>
                   <td style={{ width: "20px" }}>2</td>

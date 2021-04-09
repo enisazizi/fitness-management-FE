@@ -57,7 +57,7 @@ function AddProduct() {
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label>Surname</Form.Label>
+            <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               placeholder="description"

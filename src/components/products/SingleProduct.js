@@ -27,28 +27,26 @@ const deletedProduct = async(id)=>{
       
 
         <Row className="ml-5 mt-5">
-            <Col xs={9}> 
             { productsData && productsData.length > 0 ?(productsData.map((element)=>{
               return(
+                <Col xs={4} className=""> 
                 <Card style={{ width: '18rem' }}>
   <Card.Img variant="top" src={element.image} />
   <Card.Body>
     <Card.Title>Card Title</Card.Title>
     <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
+  <div>  {element.description}</div>
+    {element.price} <b>Euro</b>
     </Card.Text> 
     <Button variant="primary"  onClick={()=>history.push(`/${element._id}`)}>Edit</Button><Button variant="danger" onClick={(e)=>deletedProduct(element._id)}>Delete</Button>
-   
-
   </Card.Body>
 </Card>
+  
+        </Col>
               )
             }))
 :
 (<div></div>)} 
-      
-            </Col>
 </Row>
           
     )

@@ -1,6 +1,7 @@
 
 import React, { useState } from "react"
-import { Form, Row,Col ,Button} from 'react-bootstrap';
+import { Form, Row,Col ,Button, Container} from 'react-bootstrap';
+import SidebarHOC from "../../Layout"
  import {api} from "../../data/api"
 function Clients(){
   const [name ,setName] = useState("")
@@ -17,6 +18,8 @@ function Clients(){
   }
     return(
         <>
+        <Container>
+
      <Row className="mt-5">
        
             <Col xs={12}>
@@ -41,14 +44,14 @@ function Clients(){
 																setSurname(
 																	e.target
 																		.value
-																)
+                                    )
 															} />
     </Form.Group>
     <Form.Group controlId="exampleForm.ControlInput1">
       <Form.Label>Username</Form.Label>
       <Form.Control type="text" placeholder="username" onChange={(e) =>
 																setUsername(
-																	e.target
+                                  e.target
 																		.value
 																)
 															} />
@@ -57,9 +60,9 @@ function Clients(){
       <Form.Label>Password</Form.Label>
       <Form.Control type="text" placeholder="password"onChange={(e) =>
 																setPassword(
-																	e.target
-																		.value
-																)
+                                  e.target
+                                  .value
+                                  )
 															} />
     </Form.Group>
     <Form.Group controlId="exampleForm.ControlSelect1">
@@ -81,9 +84,10 @@ function Clients(){
   </Form>
   </Col>
   </Row>
+                                </Container>
         </>
     )
 }
 
 
-export default Clients
+export default SidebarHOC(Clients)

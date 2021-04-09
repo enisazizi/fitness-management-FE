@@ -7,12 +7,7 @@ import SingleProduct from "./SingleProduct";
 function Products(props){
 
   const [selected, setSelected] = useState("products");
-  // const [productsData,setProductsData] = useState()
-  // useEffect( async () => {
-  //   const response = await data.api.getAllProducts();
-  //   setProductsData(response)
-  //   console.log("Hello")
-  // }, [])
+ 
 
     return(
         <>
@@ -38,13 +33,11 @@ function Products(props){
           </div>
         </div>
         {selected === "products" ? (
-           <div className="row  mt-5">
-           <div className="col-5">
+         
            
          
            <SingleProduct {...props} />
-           </div>
-         </div>
+        
             ) : (
               <AddProduct {...props} />
             )}
