@@ -26,12 +26,12 @@ const deletedProduct = async(id)=>{
       
       
 
-        <Row className="ml-5 mt-5">
+        <Row className="ml-5 mt-5 ">
             { productsData && productsData.length > 0 ?(productsData.map((element)=>{
               return(
-                <Col xs={4} className=""> 
+                <Col xs={4} className="mb-3"> 
                 <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src={element.image} />
+  <Card.Img variant="top" src={element.image} className="pl-3" style={{width:'14rem',height:'12rem'}}/>
   <Card.Body>
     <Card.Title>Card Title</Card.Title>
     <Card.Text>

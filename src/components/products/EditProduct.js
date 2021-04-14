@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import {Form,Button, Container} from "react-bootstrap"
 import SidebarHOC from "../../Layout"
 import {data} from "../../data"
+import { useHistory } from "react-router"
 function EditProduct(props){
+    const history = useHistory()
       const [info,setInfo] = useState()
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -29,6 +31,9 @@ function EditProduct(props){
         console.log(file, "responnssssss");
         if (response.status === 201) {
           const res = await data.api.editProduct({name,description,brand,price},props.match.params.productId)
+          if(res.status=201){
+            history.push("/products")
+          }
         }
       }else{
         console.log("U need a pic")

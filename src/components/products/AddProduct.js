@@ -1,14 +1,18 @@
-import React, { useState } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import React, { useState,useEffect } from "react";
+import { Form, Row, Col, Button,Spinner,Toast } from "react-bootstrap"
+
 import { data } from "../../data";
 
 function AddProduct() {
+ 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(null);
   const [file, setFile] = useState();
-
+  const [example,setExample]=useState(false)
+  const [toaster,setToaster]=useState(false)
+  const [spinn,setSpinn]=useState(false)
   const handleFile = (e) => {
     const formData = new FormData();
     formData.append("product", e.target.files[0]);
@@ -17,12 +21,10 @@ function AddProduct() {
    
   
 };
-  // const addProductFun = async () => {
-  //   let data = { name, description, brand, price };
-  //   const res = await api.addNewProduct(data);
-
-  //   console.log("what is res ?", res);
-  // };
+// useEffect(() => {
+//   const timer = setTimeout(() => setExample(true), 3000);
+//   return () => clearTimeout(timer);
+// }, []);
   const handleUpload = async (e) => {
     try {
       if(file){
@@ -32,7 +34,27 @@ function AddProduct() {
         console.log(file, "responnssssss");
         if (response.status === 201) {
           const res = await data.api.addProductPhoto(file,response.data)
-          console.log("res of img",res)
+          console.log("res of img",res.status)
+          if(res.status ===201){
+            setExample(true)
+            const timer1 = setTimeout(() => setSpinn(true) , 500);
+           
+
+            const timer2 = setTimeout(() => {
+              setSpinn(false)
+              setToaster(true)
+            }, 1500);
+           
+
+            const timer = setTimeout(() => {
+              setExample(false)
+              setToaster(false)
+             
+             
+            }
+             , 3000);
+            return () => clearTimeout(timer,timer1,timer2);
+          }
         }
       }else{
         console.log("U need a pic")
@@ -42,7 +64,28 @@ function AddProduct() {
     }
   }
   return (
-    <Row>
+    <>
+    {example ?
+      (
+        <>
+      {spinn &&   <div className="d-flex justify-content-center mt-5">
+
+<Spinner animation="border" role="status" style={{width:"120px",height:"120px"}}>
+<span className="sr-only">Loading...</span>
+</Spinner>
+
+</div>}
+      {toaster &&   <div className="d-flex justify-content-center mt-5" >
+        <Toast style={{padding:"48px"}}>
+
+      <Toast.Body> <strong style={{ fontSize: 'large'}} className="d-flex justify-content-center">Product Added</strong></Toast.Body>
+      </Toast>
+        </div>}
+        </>
+      )
+      :
+      (
+        <Row>
       <Col xs={2}></Col>
       <Col xs={8}>
         <Form>
@@ -99,10 +142,15 @@ function AddProduct() {
 						style={{ backgroundColor: "#e647be", border: "none" }}>
 						Upload
 					</Button>
+        
           </Form.Group>
         </Form>
       </Col>
     </Row>
+      )
+    }
+  
+    </>
   );
 }
 export default AddProduct;

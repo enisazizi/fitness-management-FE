@@ -3,7 +3,9 @@ import React from "react"
 
 
 function ProductPayment(){
-
+    // let [clients, setClients] = useState([]);
+    // let [searchValue, setSearchValue] = useState("");
+    // let [filteredClients, setFilteredClients] = useState([]);
 
 
     return(

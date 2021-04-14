@@ -6,9 +6,19 @@ const configure = (urlExtention, data, method) => ({
   withCredentials: true,
 });
 //CLIENTS
+
+
+const getClients = async()=>{
+  try {
+    let res = await axios(configure("/api/client/all",null,"get"))
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 const addClient = async (data) => {
   try {
-    let response = await axios(configure("/client", data, "post"));
+    let response = await axios(configure("/api/client", data, "post"));
     response = response.data;
     console.log(response)
     return response;
@@ -51,7 +61,7 @@ const addNewProduct = async(data)=>{
 const addProductPhoto = async(data,id)=>{
   try {
     const response = await axios(configure(`/api/product/${id}/image/upload`,data,"post"))
-    return response.data
+    return response
   } catch (error) {
     console.log(error)
   }
@@ -106,5 +116,6 @@ export const api = {
   getProduct,
   editProduct,
   deleteProduct,
+  getClients,
 
 };

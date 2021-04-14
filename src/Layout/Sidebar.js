@@ -23,7 +23,7 @@ export default () => {
               Activity
             </ListGroup.Item>
             <ListGroup.Item className=" h4 rounded "  onClick={()=>handleClick("clients")} style={{ height: "50px" }}>
-              Clients
+              New Client
             </ListGroup.Item>
             <ListGroup.Item className=" h4 rounded "  onClick={()=>handleClick("products")} style={{ height: "50px" }}>
               Products

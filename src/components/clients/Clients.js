@@ -2,16 +2,16 @@
 import React, { useState } from "react"
 import { Form, Row,Col ,Button, Container} from 'react-bootstrap';
 import SidebarHOC from "../../Layout"
- import {api} from "../../data/api"
+ import {data} from "../../data"
 function Clients(){
   const [name ,setName] = useState("")
-  const [surname ,setSurname] = useState("")
+  const [email ,setEmail] = useState("")
   const [password ,setPassword] = useState("")
   const [username ,setUsername] = useState("")
   const [payload,setPayload] = useState("")
   const addClientFun = async ()=>{
-  let data = {name,surname,password,payload,username}
-    const res = await api.addClient(data)
+  let clientData = {name,email,password,payload,username}
+    const res = await data.api.addClient(clientData)
    
     // setPayload(document.getElementById("exampleForm.ControlSelect1").value)
     console.log("pay",res)
@@ -40,8 +40,8 @@ function Clients(){
     </Form.Group>
     <Form.Group controlId="exampleForm.ControlInput1">
       <Form.Label>Surname</Form.Label>
-      <Form.Control type="text" placeholder="surname" onChange={(e) =>
-																setSurname(
+      <Form.Control type="email" placeholder="email" onChange={(e) =>
+																setEmail(
 																	e.target
 																		.value
                                     )

@@ -26,10 +26,10 @@ function Payments(props){
               >
             
               <Nav.Item>
-                <Nav.Link eventKey="products">Products</Nav.Link>
+                <Nav.Link eventKey="products">Clients</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="clients">Clients</Nav.Link>
+                <Nav.Link eventKey="clients">Products</Nav.Link>
               </Nav.Item>
             </Nav>
             {selected === "products" ? (
