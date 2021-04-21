@@ -1,12 +1,23 @@
 import React,{useState} from "react"
 import {GiReceiveMoney} from 'react-icons/gi'
-import {Modal,Button,Form} from 'react-bootstrap'
+import {data} from "../../data"
+import {Modal,Button,Form,Spinner,Toast} from 'react-bootstrap'
 
 function SingleClient(props){
     const [show, setShow] = useState(false);
     const [payload,setPayload] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const addPay = async (id)=>{
+      try {
+        setShow(false)
+        console.log("hehe",payload)
+        const res = await data.api.makePayment(id,{payload})
+      } catch (error) {
+        console.log(error)
+      }
+    }
     return(
             <>
                    <tr>
@@ -37,7 +48,7 @@ function SingleClient(props){
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={()=>addPay(props.data._id)}>
             Save Changes
           </Button>
         </Modal.Footer>

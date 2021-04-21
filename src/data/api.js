@@ -100,7 +100,14 @@ const deleteProduct = async(id)=>{
   }
 }
 
-
+const makePayment = async(id,data)=>{
+  try {
+    const response = await axios(configure(`/api/client/${id}`,data,"post"))
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 
@@ -117,5 +124,6 @@ export const api = {
   editProduct,
   deleteProduct,
   getClients,
+  makePayment,
 
 };

@@ -35,60 +35,30 @@ function Activity() {
     datasets: [
       {
         label: "Monthly Active Clients",
-        data: [100, 80, 300, 400, 200, 200, 150, 300, 100, 250, 200, 300],
+        data: [0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0],
       },
     ],
   });
   return (
     <>
       <div className="container">
-        <div>
+        {/* <div>
           <Line
             data={chartData2}
             width="805px"
             height="249px"
             options={{ maintainAspectRatio: false }}
           />
-        </div>
+        </div> */}
 
         <div className="row mt-5">
           <div className="col col-9 mt-5">
-            <Table striped bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ width: "20px" }}>1</td>
-                  <td>Manuel</td>
-                  <td>Desole</td>
-                  <td>Manu</td>
-                </tr>
-                <tr>
-                  <td style={{ width: "20px" }}>2</td>
-                  <td>Enis</td>
-                  <td>Azizi</td>
-                  <td>Enith</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Ermal</td>
-                  <td>Asllani</td>
-                  <td>Cipa</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Leon </td>
-                  <td>Abimi</td>
-                  <td>Cincra</td>
-                </tr>
-              </tbody>
-            </Table>
+          <Line
+            data={chartData2}
+            width="805px"
+            height="249px"
+            options={{ maintainAspectRatio: false }}
+          />
           </div>
           <div className="col col-3">
             <Pie
