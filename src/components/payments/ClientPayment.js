@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from "react"
-import {data} from "../../data"
+import {api} from "../../data/api"
 import SingleClient from "./SingleClient"
 import { Table } from "react-bootstrap";
 
@@ -11,7 +11,7 @@ function ClientPayment(){
     let [filteredClients, setFilteredClients] = useState([]);
 
     const getClient = async () => {
-        const response = await data.api.getClients()
+        const response = await api.getClients()
         console.log(response,"hehe")
         setClients(response)
     

@@ -7,7 +7,14 @@ const configure = (urlExtention, data, method) => ({
 });
 //CLIENTS
 
-
+const getOnlineClients = async()=>{
+  try {
+    let res = await axios(configure("/api/activity/all",null,"get"))
+    return res
+  } catch (error) {
+    console.log(error)
+  }
+}
 const getClients = async()=>{
   try {
     let res = await axios(configure("/api/client/all",null,"get"))
@@ -125,5 +132,6 @@ export const api = {
   deleteProduct,
   getClients,
   makePayment,
+  getOnlineClients,
 
 };

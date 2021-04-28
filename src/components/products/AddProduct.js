@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { Form, Row, Col, Button,Spinner,Toast } from "react-bootstrap"
 
-import { data } from "../../data";
+import  {api}  from "../../data/api";
 
 function AddProduct() {
- 
+  const [isLoading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -21,19 +21,23 @@ function AddProduct() {
    
   
 };
+function simulateNetworkRequest() {
+  return new Promise((resolve) => setTimeout(resolve, 4000));
+}
 // useEffect(() => {
 //   const timer = setTimeout(() => setExample(true), 3000);
 //   return () => clearTimeout(timer);
 // }, []);
+const handleClick = () => setLoading(true);
   const handleUpload = async (e) => {
     try {
       if(file){
-  
-        const response = await data.api.addNewProduct({name,description,brand,price})
+        console.log("hehe")
+        const response = await api.addNewProduct({name,description,brand,price})
       
         console.log(file, "responnssssss");
         if (response.status === 201) {
-          const res = await data.api.addProductPhoto(file,response.data)
+          const res = await api.addProductPhoto(file,response.data)
           console.log("res of img",res.status)
           if(res.status ===201){
             setExample(true)
@@ -63,6 +67,14 @@ function AddProduct() {
       console.log("handle upl img err: ", error);
     }
   }
+  useEffect(() => {
+    if (isLoading) {
+      simulateNetworkRequest().then(() => {
+        setLoading(false);
+      });
+    }
+  }, [isLoading]);
+
   return (
     <>
     {example ?
@@ -136,12 +148,19 @@ function AddProduct() {
 							</label>
                       
           <Form.Group controlId="exampleForm.ControlSelect1">
-          <Button
+          {/* <Button
 						variant='primary'
 						onClick={(e) => handleUpload(e)}
 						style={{ backgroundColor: "#e647be", border: "none" }}>
 						Upload
-					</Button>
+					</Button> */}
+          <Button
+            variant="primary"
+            disabled={isLoading}
+            onClick={!isLoading ? (e) =>{ handleUpload(e) ; handleClick()} : null}
+          >
+            {isLoading ? 'Loading…' : 'Upload'}
+          </Button>
         
           </Form.Group>
         </Form>

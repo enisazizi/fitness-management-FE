@@ -1,32 +1,35 @@
-
-import React, { useState } from "react"
-import { Form, Row,Col ,Button, Container} from 'react-bootstrap';
-import SidebarHOC from "../../Layout"
- import {data} from "../../data"
-function Clients(){
+import React, { useState,useEffect } from "react";
+import { Form, Button } from "react-bootstrap";
+import client from ".";
+import {api} from "../../data/api"
+const ClientForm = () => {
   const [name ,setName] = useState("")
-  const [email ,setEmail] = useState("")
+  const [surname ,setSurname] = useState("")
   const [password ,setPassword] = useState("")
   const [username ,setUsername] = useState("")
   const [payload,setPayload] = useState("")
   const addClientFun = async ()=>{
-  let clientData = {name,email,password,payload,username}
-    const res = await data.api.addClient(clientData)
+  let clientData = {name,surname,password,payload,username}
+    const res = await api.addClient(clientData)
    
     // setPayload(document.getElementById("exampleForm.ControlSelect1").value)
     console.log("pay",res)
   }
-    return(
-        <>
-        <Container>
+  return (
+    <div className="container-fluid">
+      <div className="row row-cols-2">
+        <div className="col text-center">
+          <div>
+            <img
+              className="img-fluid"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2e1TpSljSYrLgnE6Ui9HFq7eLnihrbqi6aTIr3XhPafD6LrfgyD1zfuJHqQvMB40UOeE&usqp=CAU"
+            />
+          </div>
 
-     <Row className="mt-5">
-       
-            <Col xs={12}>
-
-            
-    <Form>
-    <Form.Group controlId="exampleForm.ControlInput1">
+          <Button variant="secondary">Select Image</Button>
+        </div>
+        <div className="col">
+        <Form.Group controlId="exampleForm.ControlInput1">
       <Form.Label>Name</Form.Label>
       <Form.Control type="text" placeholder="name" onChange={(e) =>
 																setName(
@@ -40,8 +43,8 @@ function Clients(){
     </Form.Group>
     <Form.Group controlId="exampleForm.ControlInput1">
       <Form.Label>Surname</Form.Label>
-      <Form.Control type="email" placeholder="email" onChange={(e) =>
-																setEmail(
+      <Form.Control type="text" placeholder="surname" onChange={(e) =>
+																setSurname(
 																	e.target
 																		.value
                                     )
@@ -77,17 +80,13 @@ function Clients(){
         <option value="184 days">6 month</option>
         <option value="365 days">1 year</option>
       </Form.Control>
-      <Button onClick={()=>addClientFun()}>Add</Button>
+      <Button style={{marginTop:'5px'}} onClick={()=>addClientFun()}>Add</Button>
     </Form.Group>
     
-  
-  </Form>
-  </Col>
-  </Row>
-                                </Container>
-        </>
-    )
-}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-
-export default SidebarHOC(Clients)
+export default ClientForm;

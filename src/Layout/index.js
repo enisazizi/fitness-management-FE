@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar";
 
 const ComponentLayout = (Component) => {
-  const LayoutComponent = (props) => {
+  const LayoutComponent = () => {
     return (
       <div className="container-fluid">
         <div className="row">
@@ -14,7 +14,7 @@ const ComponentLayout = (Component) => {
               <div className="col" style={{height:"50px"}}>
               </div>
               <div className="col">
-                <Component {...props} />
+                <Component {...Component.props} />
               </div>
             </div>
           </div>

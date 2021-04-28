@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react"
 import {Form,Button, Container} from "react-bootstrap"
 import SidebarHOC from "../../Layout"
-import {data} from "../../data"
-import { useHistory } from "react-router"
-function EditProduct(props){
-    const history = useHistory()
-      const [info,setInfo] = useState()
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [brand, setBrand] = useState("");
-    const [price, setPrice] = useState(null);
-    const [file, setFile] = useState();
-    
+import {api} from "../../data/api"
+import { useHistory,useParams } from "react-router-dom"
+function EditProduct({props}){
+  const history = useHistory()
+  const [info,setInfo] = useState()
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
+  const [price, setPrice] = useState(null);
+  const [file, setFile] = useState();
+  
+  let { productId } = useParams();
     
     const handleFile = (e) => {
       const formData = new FormData();
@@ -24,13 +25,13 @@ function EditProduct(props){
   const handleUpload = async (e) => {
     try {
       if(file){
-        const response = await data.api.editProduct(file,props.match.params.productId)
+        const response = await api.editProduct(file,productId)
         console.log("res of img",response)
         
       
         console.log(file, "responnssssss");
         if (response.status === 201) {
-          const res = await data.api.editProduct({name,description,brand,price},props.match.params.productId)
+          const res = await api.editProduct({name,description,brand,price},productId)
           if(res.status=201){
             history.push("/products")
           }
@@ -43,9 +44,11 @@ function EditProduct(props){
     }
   }
   useEffect(async()=>{
-    const res = await data.api.getProduct(props.match.params.productId)
-    setInfo(res)
-    console.log("info",res)
+     const res = await api.getProduct(productId)
+    console.log("hehehe",props)
+    console.log("heheh2",productId)
+     setInfo(res)
+     console.log("info",res)
   },[])
     return(
         <>

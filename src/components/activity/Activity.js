@@ -5,19 +5,11 @@ import { Table } from "react-bootstrap";
 // import Chart from "chart.js"
 import { Bar, Line, Pie } from "react-chartjs-2";
 import SidebarHOC from "../../Layout";
+import {api} from "../../data/api"
 
 function Activity() {
+ 
   const [chartData, setChartData] = useState({
-    labels: ["Active-Clients"],
-    datasets: [
-      {
-        label: "Active clients inside gym",
-        data: [1],
-        backgroundColor: ["rgba(233, 212, 96, 1)"],
-      },
-    ],
-  });
-  const [chartData2, setChartData2] = useState({
     labels: [
       "January",
       "February",
@@ -35,10 +27,52 @@ function Activity() {
     datasets: [
       {
         label: "Monthly Active Clients",
-        data: [0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       },
     ],
   });
+  const [onlineClients,setOnlineSclients] = useState(0)
+  useEffect( async () => {
+    const response = await api.getOnlineClients()
+    
+   setOnlineSclients({
+    labels: ["Active-Clients"],
+    datasets: [
+      {
+        label: "Active clients inside gym",
+        data: [response.data.length],
+        backgroundColor: ["rgba(233, 212, 96, 1)"],
+      },
+    ],
+  })
+    console.log("Hello",response.data.length)
+    const res = await api.getClients()
+    console.log("helli2",res)
+    setChartData({
+      labels: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May,",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      datasets: [
+        {
+          label: "Monthly Active Clients",
+          data: [0, 0, 0, res.length, 0, 0, 0, 0, 0, 0, 0, 0],
+        },
+      ],
+    })
+  }, [])
+
+
   return (
     <>
       <div className="container">
@@ -54,7 +88,7 @@ function Activity() {
         <div className="row mt-5">
           <div className="col col-9 mt-5">
           <Line
-            data={chartData2}
+            data={chartData}
             width="805px"
             height="249px"
             options={{ maintainAspectRatio: false }}
@@ -62,7 +96,7 @@ function Activity() {
           </div>
           <div className="col col-3">
             <Pie
-              data={chartData}
+              data={onlineClients}
               width="805px"
               height="249px"
               options={{ maintainAspectRatio: false }}

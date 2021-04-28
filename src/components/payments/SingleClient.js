@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import {GiReceiveMoney} from 'react-icons/gi'
-import {data} from "../../data"
+import {api} from "../../data/api"
 import {Modal,Button,Form,Spinner,Toast} from 'react-bootstrap'
 
 function SingleClient(props){
@@ -13,7 +13,7 @@ function SingleClient(props){
       try {
         setShow(false)
         console.log("hehe",payload)
-        const res = await data.api.makePayment(id,{payload})
+        const res = await api.makePayment(id,{payload})
       } catch (error) {
         console.log(error)
       }

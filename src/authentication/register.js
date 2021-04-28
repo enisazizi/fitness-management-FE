@@ -1,102 +1,70 @@
-// import React, { useState, useEffect } from "react";
-// import { useRecoilState } from "recoil";
-// import { Form, Col, Button } from "react-bootstrap";
-// import { data } from "../data";
-// import {validateEmail,validatePassword} from '../utilities/index'
+import React, { useState,useEffect } from "react";
+import data from "../data"
+import { Col, Form,Button, Row ,Image} from "react-bootstrap";
+import { useRecoilState } from "recoil";
+import { useHistory } from "react-router-dom";
+const Register = (props) => {
+    const [company, setCompany] = useRecoilState(data.atoms.Company);
+    const [myImg,setMyImg]=useState("https://res.cloudinary.com/dtopnwa0t/image/upload/v1619138116/Fitness/synu4eskzfkanxgyvdjg.png")
+  const [formData, setFormData] = useState(null);
+const history = useHistory()
+  const handleChange = ({ target: { value, name } }) => {
+    setFormData({ ...formData, [name]: value });
+  };
+  useEffect(() => {
+    if (!company.auth) return;
+    setMyImg("https://res.cloudinary.com/dtopnwa0t/image/upload/v1619139615/Fitness/mucsiqc0sfjyjuhfnghx.png")
+    const timer = setTimeout(() => {
+       
+        history.push("/clients");
+      }, 1000)
+      return () => clearTimeout(timer);
+  }, [company]);
+  const handleForm = async (e) => {
+    e.preventDefault();
+    const response = await data.api.auth.company(formData);
+    if (!response) return;
+    setCompany({ auth: true, data: response });
+  };
 
-// // eslint-disable-next-line import/no-anonymous-default-export
-// export default () => {
-//   const [client, setClient] = useRecoilState(data.atoms.client);
-//   const [valid, setValid] = useState({
-//     strong: false,
-//     match: false,
-//     email: false,
-//   });
-//   const [formData, setFormData] = useState(null);
+      // "https://res.cloudinary.com/dtopnwa0t/image/upload/v1619139615/Fitness/mucsiqc0sfjyjuhfnghx.png"
 
-//   const handleChange = ({ target: { value, name } }) => {
-//     setFormData({ ...formData, [name]: value });
-//     if (name === "password") {
-//       setValid({ ...valid, strong: validatePassword(value) });
-//     }
-//     if (name === "email") {
-//       setValid({ ...valid, email: validateEmail(value) });
-//     }
-//   };
+  return (
+   <Row >
+     
+    
+       <Col xs={6} style={{backgroundColor:"black"}}>
+       <Image src={myImg} style={{width:'50vw',height:'55vw',overscrollBehavior: 'unset'}} />
+       </Col>
+       <Col xs={6} className="d-flex justify-content-center" style={{marginTop:'8%'}}>
+           <div>
 
-//   const handleForm = async (e) => {
-//     e.preventDefault();
-//     const response = await data.api.addClient(formData);
-//     if (!response) return;
-//     setClient({ auth: true, data: response });
-//   };
+        <h2 className="ml-5 mb-4" style={{fontWeight:'bold',letterSpacing: '5px', color:'#333'}}>LOGIN</h2>
+        <Form onSubmit={handleForm}>
+        <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email"  name="email"  onChange={handleChange}/>
+                <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
 
-//   return (
-//     <div>
-//       <h3 className="text-center text-white"> Welcome, Please Register</h3>
-//       <Form onSubmit={handleForm}>
-//         <Form.Row className="my-3">
-//           <Col>
-//             <Form.Control
-//               placeholder="First name"
-//               name="name"
-//               onChange={handleChange}
-//             />
-//           </Col>
-//           <Col>
-//             <Form.Control
-//               placeholder="Last name"
-//               name="surname"
-//               onChange={handleChange}
-//             />
-//           </Col>
-//         </Form.Row>
-//         <Form.Row className="my-3">
-//           <Col>
-//             <Form.Control
-//               isValid={valid.email}
-//               isInvalid={!valid.email}
-//               placeholder="Email"
-//               name="email"
-//               onChange={handleChange}
-//             />
-//           </Col>
-//         </Form.Row>
-//         <Form.Row className="my-3">
-//           <Col>
-//             <Form.Control
-//               type="password"
-//               placeholder="Password"
-//               isValid={valid.strong}
-//               isInvalid={!valid.strong}
-//               name="password"
-//               onChange={handleChange}
-//             />
-//           </Col>
-//           <Col>
-//             <Form.Control
-//               type="password"
-//               placeholder="Confirm Password"
-//               isInvalid={!valid.match}
-//               isValid={valid.match}
-//               onChange={({ target: { value } }) => {
-//                 if (value === formData.password) {
-//                   setValid({ ...valid, match: true });
-//                 }
-//               }}
-//             />
-//           </Col>
-//         </Form.Row>
-//         <Form.Row className="justify-content-center">
-//           <Button
-//             variant="primary"
-//             type="submit"
-//             disabled={valid.email && valid.strong && valid.match ? false : true}
-//           >
-//             Submit
-//           </Button>
-//         </Form.Row>
-//       </Form>
-//     </div>
-//   );
-// };
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password"   name="password" onChange={handleChange} />
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Remember me" />
+            </Form.Group>
+            <Button variant="dark" type="submit">
+                Login
+            </Button>
+            </Form>
+           </div>
+       </Col>
+
+   </Row>
+  );
+};
+
+export default Register;

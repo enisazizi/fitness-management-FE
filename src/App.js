@@ -7,24 +7,26 @@ import {
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Landing from "./pages/landing";
-import Products from "./components/products/Products";
-import { data } from "./data";
+import data from "./data";
 import { useRecoilState, RecoilRoot } from "recoil";
-import Activity from "./components/activity/Activity";
-import EditProduct from "./components/products/EditProduct";
-import Clients from "./components/clients/Clients";
-import Payments from "./components/payments/Payments";
+import Clients from "./components/client";
+import Products from "./components/products/Products"
+import EditProducts from "./components/products/EditProduct"
+import Payments from "./components/payments/Payments"
+import Activity from "./components/activity/Activity"
+import Register from "./authentication/register"
 function App() {
   return (
     <RecoilRoot>
       <Router>
         <Switch>
-          <Route exact path="/clients" component={Clients}/>
-          <Route exact path="/payments" component={Payments}/>
-          <Route exact path="/activity" component={Activity} />
-          <Route exact path="/products" component={Products} />
-          <Route path='/:productId' exact component={EditProduct} />
           <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/payments" component={Payments} />
+          <Route exact path="/activity" component={Activity} />
+          <Route  path="/product/:productId" component={EditProducts} />
+          <Route path={"/clients"} component={Clients} />
+          <Route path={"/products"} component={Products} />
         </Switch>
       </Router>
     </RecoilRoot>
@@ -32,26 +34,21 @@ function App() {
 }
 
 function Protected({ component: Component, ...rest }) {
-  const [client, setClient] = useRecoilState(data.atoms.client);
+  const [company, setCompany] = useRecoilState(data.atoms.Company);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const clientLog = async () => {
-    setClient({ auth: true, data: { ...data } });
+    setCompany({ auth: true, data: { ...data } });
   };
-
-  useEffect(() => {
-    clientLog();
-  }, [client.auth, clientLog]);
+  useEffect(() => {});
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!client.auth) {
+        if (!company.auth) {
           return (
-            <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
-            />
+            <Redirect to={{ pathname: "/", state: { from: props.location } }} />
           );
         } else return <Component {...props} />;
       }}
